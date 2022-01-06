@@ -1,0 +1,29 @@
+# Maintainer: Orhun Parmaksız <orhun@archlinux.org>
+
+pkgname=lto-pkg
+pkgver=1
+pkgrel=1
+pkgdesc="Test building a Rust package with LTO enabled"
+arch=('x86_64')
+depends=('gcc-libs')
+makedepends=('cargo' 'git' 'clang' 'lld')
+source=("$pkgname::git+file:///$PWD/../app/")
+sha256sums=('SKIP')
+options=('lto')
+
+prepare() {
+  cd "$pkgname"
+  cargo fetch --target "x86_64-unknown-linux-gnu"
+}
+
+build() {
+  cd "$pkgname"
+  cargo build -vv --release --frozen
+}
+
+package() {
+  cd "$pkgname"
+  install -Dm 755 "target/release/app" -t "$pkgdir/usr/bin"
+}
+
+# vim:set ts=2 sw=2 et:

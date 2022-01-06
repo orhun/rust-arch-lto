@@ -1,0 +1,3 @@
+- https://github.com/briansmith/ring/issues/1444
+- https://github.com/sstadick/hck/issues/48
+  - https://github.com/rust-lang/rust/issues/74657

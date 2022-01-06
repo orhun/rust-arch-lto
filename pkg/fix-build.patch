@@ -1,0 +1,29 @@
+--- PKGBUILD	2022-01-06 23:32:28.674112324 +0300
++++ PKGBUILD	2022-01-06 23:32:13.437429588 +0300
+@@ -18,6 +18,26 @@
+ 
+ build() {
+   cd "$pkgname"
++
++  if [[ $CFLAGS = *-flto* ]]; then
++    local rustflags=(
++      -C linker=clang
++      -C linker-plugin-lto
++      -C link-args="$CFLAGS -fuse-ld=lld"
++    )
++
++    IFS=$'\x1f'
++    export CARGO_ENCODED_RUSTFLAGS="${rustflags[*]}"
++    unset IFS
++
++    export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
++    export CARGO_PROFILE_RELEASE_LTO=fat
++    export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang
++
++    export CC=clang
++    export CXX=clang++
++  fi
++
+   cargo build -vv --release --frozen
+ }
+ 
