@@ -1,5 +1,14 @@
---- PKGBUILD	2022-01-06 23:32:28.674112324 +0300
-+++ PKGBUILD	2022-01-06 23:32:13.437429588 +0300
+--- PKGBUILD	2022-01-07 00:16:16.761634963 +0300
++++ PKGBUILD	2022-01-07 00:16:20.298307826 +0300
+@@ -6,7 +6,7 @@
+ pkgdesc="Test building a Rust package with LTO enabled"
+ arch=('x86_64')
+ depends=('gcc-libs')
+-makedepends=('cargo' 'git')
++makedepends=('cargo' 'git' 'clang' 'lld')
+ source=("$pkgname::git+file:///$PWD/../app/")
+ sha256sums=('SKIP')
+ options=('lto')
 @@ -18,6 +18,26 @@
  
  build() {
